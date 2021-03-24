@@ -74,7 +74,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/resumeTitleTextView"
+                    android:id="@+id/summaryTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/resumeTextView"
+                    android:id="@+id/summaryTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -95,7 +95,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/resumeTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/summaryTitleTextView"
                     tools:text="Le Seigneur des Anneaux raconte la fin du Troisième Âge de la Terre du Milieu. Bilbo le Hobbit décide de quitter la Comté et laisse pour héritage à son neveu Frodo, Cul-de-Sac et l'Anneau qu'il avait trouvé lors de son aventure. Après de longue recherche, Gandalf apprend qu'il s'agit en fait de l'Anneau Unique, objet de pouvoir de Sauron, qui le cherche afin de conquérir la Terre du Milieu. Face à cette découverte, Gandalf demande à Frodo de prendre la route de Fondcombe. À partir de là, commencera le voyage de la Communauté de l'Anneau dont l'objectif désespéré sera sa destruction, dans la forge qui l'a vu naître au cœur du Mordor. Malheureusement, la Communauté sera séparée, les uns continuant la quête et les autres rejoignant les Royaumes du Rohan puis du Gondor qui participeront à la Guerre de l'Anneau. " />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
