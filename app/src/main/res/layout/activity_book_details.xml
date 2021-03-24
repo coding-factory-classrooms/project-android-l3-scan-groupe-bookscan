@@ -9,10 +9,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,17 +23,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/bookCoverImgView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
-                android:scaleType="fitXY"
-                tools:srcCompat="@drawable/lotr_cover_fr" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/bookCoverImgView"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/lotr_cover_fr" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -73,8 +77,6 @@
                     android:id="@+id/resumeTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp"
                     android:text="Résumé :"
                     android:textSize="24sp"
@@ -94,7 +96,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/resumeTitleTextView"
-                    tools:text="Un jeune et timide `Hobbit', Frodon Sacquet, hérite d'un anneau magique. Bien loin d'être une simple babiole, il s'agit d'un instrument de pouvoir absolu qui permettrait à Sauron, le `Seigneur des ténèbres', de régner sur la `Terre du Milieu' et de réduire en esclavage ses peuples. Frodon doit parvenir jusqu'à la `Crevasse du Destin' pour détruire l'anneau." />
+                    tools:text="Le Seigneur des Anneaux raconte la fin du Troisième Âge de la Terre du Milieu. Bilbo le Hobbit décide de quitter la Comté et laisse pour héritage à son neveu Frodo, Cul-de-Sac et l'Anneau qu'il avait trouvé lors de son aventure. Après de longue recherche, Gandalf apprend qu'il s'agit en fait de l'Anneau Unique, objet de pouvoir de Sauron, qui le cherche afin de conquérir la Terre du Milieu. Face à cette découverte, Gandalf demande à Frodo de prendre la route de Fondcombe. À partir de là, commencera le voyage de la Communauté de l'Anneau dont l'objectif désespéré sera sa destruction, dans la forge qui l'a vu naître au cœur du Mordor. Malheureusement, la Communauté sera séparée, les uns continuant la quête et les autres rejoignant les Royaumes du Rohan puis du Gondor qui participeront à la Guerre de l'Anneau. " />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
