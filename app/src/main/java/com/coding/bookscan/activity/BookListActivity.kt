@@ -29,7 +29,7 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.bookListRecyclerView.adapter = adapter
 
-        model.getBookList()
+        model.getBookList(this)
     }
 
     private fun updateUi(state: BookListViewModelState) {

@@ -1,10 +1,12 @@
 package com.coding.bookscan.entity.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.coding.bookscan.entity.data.Book
 
+@Dao
 interface BookDao {
     @Query("SELECT * FROM book")
     fun getAll(): List<Book>
@@ -16,7 +18,7 @@ interface BookDao {
     fun findById(bookIsbn: Int): Book
 
     @Insert
-    fun insertAll(vararg book: Book)
+    fun insert(book: Book)
 
     @Delete
     fun delete(book: Book)
