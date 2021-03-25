@@ -27,6 +27,7 @@ class BookDetailsActivity : AppCompatActivity() {
         model.getBookDetailState().observe(this, Observer {
             book -> updateUi(book!!)
         })
+
         model.loadBookDetail(book)
     }
 
