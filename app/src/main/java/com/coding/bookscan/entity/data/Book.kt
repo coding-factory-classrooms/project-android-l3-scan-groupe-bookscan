@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Book (
     @PrimaryKey(autoGenerate = true) val id : Int,
-    @ColumnInfo(name = "book_isbn") val isbn : Int,
+    @ColumnInfo(name = "book_isbn") val isbn : String,
     @ColumnInfo(name = "book_title") val title: String,
     @ColumnInfo(name = "book_author") val author : String,
     @ColumnInfo(name = "book_edition") val edition : String,
