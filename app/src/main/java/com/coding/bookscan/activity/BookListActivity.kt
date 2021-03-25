@@ -1,5 +1,7 @@
 package com.coding.bookscan.activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coding.bookscan.App
+import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookListBinding
 import com.coding.bookscan.viewmodel.BookListViewModel
 import com.coding.bookscan.viewmodel.BookListViewModelState
