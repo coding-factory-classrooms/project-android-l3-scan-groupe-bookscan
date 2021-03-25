@@ -42,8 +42,20 @@ class ScannerActivity : AppCompatActivity() {
             state -> uiResponse(state)
         })
 
+        binding.homeButton.setOnClickListener {
+            val intent = Intent(this,BookListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.scannerButton.setOnClickListener {
+            val intent = Intent(this,ScannerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         codeScanner(binding)
     }
+
 
     private fun uiResponse(state: ScannerViewModelState?) {
         when(state){
@@ -52,6 +64,8 @@ class ScannerActivity : AppCompatActivity() {
             null -> TODO()
         }
     }
+
+
 
     private fun goToDetails(book: Book) {
         Log.i("scanner", "goToDetails: $book")

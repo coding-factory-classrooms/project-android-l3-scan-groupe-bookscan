@@ -1,10 +1,10 @@
 package com.coding.bookscan.activity
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -35,6 +35,26 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.adapter = adapter
 
         model.getBookList(App.db,this)
+
+        var apiUtils: ApiUtils = ApiUtils()
+        var response: String = apiUtils.getBooks("https://students.gryt.tech/bookscan/9782253169789")
+        binding.homeButton.setOnClickListener {
+            val intent = Intent(this,BookListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.scannerButton.setOnClickListener {
+            val intent = Intent(this,ScannerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.searchButton.setOnClickListener{
+            var textSearched: TextView = binding.searchTextPlain
+            model.getBookListByName(App.db,this,textSearched.text.toString())
+        }
+
+        Log.i("ApiUtils", response)
     }
 
     private fun updateUi(state: BookListViewModelState) {
