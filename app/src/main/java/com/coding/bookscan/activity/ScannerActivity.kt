@@ -98,7 +98,7 @@ class ScannerActivity : AppCompatActivity() {
 
             decodeCallback =  DecodeCallback {
                 runOnUiThread {
-                    model.getBook(it.text, App.db)
+                    model.getBook(it.text, App.db, this@ScannerActivity)
                     Log.i("scanner","the code ${it.text}")
                 }
             }
