@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -46,6 +47,11 @@ class BookListActivity : AppCompatActivity() {
             val intent = Intent(this,ScannerActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        binding.searchButton.setOnClickListener{
+            var textSearched: TextView = binding.searchTextPlain
+            model.getBookListByName(App.db,this,textSearched.text.toString())
         }
 
         Log.i("ApiUtils", response)
