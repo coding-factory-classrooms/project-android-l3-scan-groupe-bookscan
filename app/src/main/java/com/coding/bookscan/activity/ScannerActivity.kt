@@ -19,6 +19,7 @@ import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
+import com.coding.bookscan.App
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.viewmodel.CAMERA_REQUEST_CODE
 import com.coding.bookscan.viewmodel.ScannerViewModel
@@ -97,7 +98,7 @@ class ScannerActivity : AppCompatActivity() {
 
             decodeCallback =  DecodeCallback {
                 runOnUiThread {
-                    model.getBook(it.text)
+                    model.getBook(it.text, App.db)
                     Log.i("scanner","the code ${it.text}")
                 }
             }
