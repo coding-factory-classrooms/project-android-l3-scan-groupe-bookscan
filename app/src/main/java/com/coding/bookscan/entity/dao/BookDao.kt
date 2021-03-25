@@ -1,5 +1,8 @@
 package com.coding.bookscan.entity.dao
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.liveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,17 +12,17 @@ import com.coding.bookscan.entity.data.Book
 @Dao
 interface BookDao {
     @Query("SELECT * FROM book")
-    fun getAll(): List<Book>
+    fun getAllBook(): LiveData<List<Book>>
 
     @Query("SELECT * FROM book WHERE book_title LIKE :bookTitle LIMIT 1")
-    fun findByName(bookTitle: String): Book
+    fun findBookByName(bookTitle: String): LiveData<Book>
 
     @Query("SELECT * FROM book WHERE book_isbn = :bookIsbn LIMIT 1")
-    fun findById(bookIsbn: Int): Book
+    fun findBookById(bookIsbn: Int): Book
 
     @Insert
-    fun insert(book: Book)
+    fun insertBook(book: Book)
 
     @Delete
-    fun delete(book: Book)
+    fun deleteBook(book: Book)
 }
