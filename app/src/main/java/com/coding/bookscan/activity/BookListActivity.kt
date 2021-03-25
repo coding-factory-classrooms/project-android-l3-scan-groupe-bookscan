@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coding.bookscan.App
@@ -49,7 +50,7 @@ class BookListActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.searchButton.setOnClickListener{
+        binding.searchTextPlain.addTextChangedListener {
             var textSearched: TextView = binding.searchTextPlain
             model.getBookListByName(App.db,this,textSearched.text.toString())
         }
