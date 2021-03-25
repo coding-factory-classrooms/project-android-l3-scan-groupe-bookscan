@@ -73,10 +73,7 @@ class ScannerViewModel : ViewModel() {
                 Log.i("ApiUtils", book.genre)
                 Log.i("ApiUtils", book.image)
                 book.scanDate = Date().toString()
-                val imgId = context.resources.getIdentifier(book.formatedImgName(),"drawable",context.packageName)
-                Log.i("scanner", "onResponse: ${book.formatedImgName()}")
-                Log.i("scanner", "onResponse: $imgId")
-                book.coverId = imgId
+
                 db.bookDao().insertBook(book)
                 scannerState.postValue(ScannerViewModelState.Success(book,"Livre trouvé $isbn"))
             }
