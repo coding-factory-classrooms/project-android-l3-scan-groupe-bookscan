@@ -40,7 +40,16 @@ class BookDetailsActivity : AppCompatActivity() {
             finish()
         }
 
+        val actionBar = supportActionBar
+        actionBar!!.title = "Details"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         model.loadBookDetail(book)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun updateUi(state: BookDetailsViewModelState) {
