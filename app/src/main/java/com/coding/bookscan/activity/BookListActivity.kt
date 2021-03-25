@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.coding.bookscan.App
 import com.coding.bookscan.ApiUtils
 import com.coding.bookscan.databinding.ActivityBookListBinding
 import com.coding.bookscan.viewmodel.BookListViewModel
@@ -31,6 +32,7 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.bookListRecyclerView.adapter = adapter
 
+        model.getBookList(App.db,this)
         model.getBookList()
 
         var apiUtils: ApiUtils = ApiUtils()
