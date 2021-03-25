@@ -33,7 +33,6 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.adapter = adapter
 
         model.getBookList(App.db,this)
-        model.getBookList()
 
         var apiUtils: ApiUtils = ApiUtils()
         var response: String = apiUtils.getBooks("https://students.gryt.tech/bookscan/9782253169789")

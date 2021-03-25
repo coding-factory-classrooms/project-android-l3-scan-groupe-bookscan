@@ -14,10 +14,16 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.coding.bookscan.databinding.ActivityScannerBinding
+import com.coding.bookscan.entity.AppDatabase
 import com.coding.bookscan.entity.data.Book
+import com.google.gson.Gson
+import okhttp3.*
+import java.io.IOException
+import java.util.*
 import kotlin.concurrent.thread
 
 const val CAMERA_REQUEST_CODE = 101
+const val apiBaseUrl: String = "https://students.gryt.tech/bookscan/"
 
 sealed class ScannerViewModelState(open val errorMessage : String = "", open val successMessage : String = "") {
     data class Success(val book : Book, override val successMessage: String) : ScannerViewModelState(successMessage = successMessage)
@@ -27,6 +33,7 @@ sealed class ScannerViewModelState(open val errorMessage : String = "", open val
 class ScannerViewModel : ViewModel() {
 
     private val scannerState = MutableLiveData<ScannerViewModelState>()
+    private val client = OkHttpClient()
 
     fun getScannerState(): MutableLiveData<ScannerViewModelState> {
         return scannerState
@@ -44,8 +51,29 @@ class ScannerViewModel : ViewModel() {
         }
     }
 
-    fun getBook(isbn : String){
-        val book = Book(0,isbn,"","","","","","","","",0)
-        scannerState.postValue(ScannerViewModelState.Success(book,"Livre trouvé $isbn"))
+    fun getBook(isbn : String, db : AppDatabase){
+        var jsonReturn: String = ""
+        val gson = Gson()
+        val url = apiBaseUrl + isbn
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {}
+            override fun onResponse(call: Call, response: Response) {
+                response.body()?.let { jsonReturn = it.string() }
+                Log.i("ApiUtils", jsonReturn)
+                val book: Book = gson.fromJson(jsonReturn, Book::class.java)
+                Log.i("ApiUtils", book.title)
+                Log.i("ApiUtils", book.author)
+                Log.i("ApiUtils", book.edition)
+                Log.i("ApiUtils", book.genre)
+                Log.i("ApiUtils", book.image)
+                book.scanDate = Date().toString()
+                db.bookDao().insertBook(book)
+                scannerState.postValue(ScannerViewModelState.Success(book,"Livre trouvé $isbn"))
+            }
+        })
     }
 }

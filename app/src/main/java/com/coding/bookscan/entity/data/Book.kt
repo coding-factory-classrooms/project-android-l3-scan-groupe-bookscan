@@ -16,8 +16,8 @@ data class Book (
     @ColumnInfo(name = "book_edition") val edition : String,
     @ColumnInfo(name = "book_summary") val summary : String,
     @ColumnInfo(name = "book_gender") val genre :String,
-    @ColumnInfo(name = "book_release_date") val releaseDate:String,
+    @ColumnInfo(name = "book_release_date") val release_date:String,
     @ColumnInfo(name = "book_cover_name") val image:String,
-    @ColumnInfo(name = "book_scan_date") val scanDate : String,
+    @ColumnInfo(name = "book_scan_date") var scanDate : String,
     @ColumnInfo(name = "book_cover_id") val coverId:Int
 ) : Parcelable
