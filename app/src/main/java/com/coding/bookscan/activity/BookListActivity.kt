@@ -1,5 +1,6 @@
 package com.coding.bookscan.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -36,6 +37,17 @@ class BookListActivity : AppCompatActivity() {
 
         var apiUtils: ApiUtils = ApiUtils()
         var response: String = apiUtils.getBooks("https://students.gryt.tech/bookscan/9782253169789")
+        binding.homeButton.setOnClickListener {
+            val intent = Intent(this,BookListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.scannerButton.setOnClickListener {
+            val intent = Intent(this,ScannerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         Log.i("ApiUtils", response)
     }
 

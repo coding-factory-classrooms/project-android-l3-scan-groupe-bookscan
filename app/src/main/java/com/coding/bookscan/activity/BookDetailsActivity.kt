@@ -1,5 +1,6 @@
 package com.coding.bookscan.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,17 @@ class BookDetailsActivity : AppCompatActivity() {
         model.getBookDetailState().observe(this, Observer {
             book -> updateUi(book!!)
         })
+
+        binding.homeButton.setOnClickListener {
+            val intent = Intent(this,BookListActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        binding.scannerButton.setOnClickListener {
+            val intent = Intent(this,ScannerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         model.loadBookDetail(book)
     }
