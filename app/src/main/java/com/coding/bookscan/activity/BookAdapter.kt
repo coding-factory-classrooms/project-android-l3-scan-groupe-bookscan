@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.coding.bookscan.Book
+import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.databinding.BookItemBinding
 
 class BookAdapter(var books:List<Book>) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {

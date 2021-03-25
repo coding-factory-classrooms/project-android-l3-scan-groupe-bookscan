@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.coding.bookscan.Book
+import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookDetailsBinding
 import com.coding.bookscan.viewmodel.BookDetailsViewModel
