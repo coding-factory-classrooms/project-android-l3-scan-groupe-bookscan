@@ -16,14 +16,75 @@
         app:flashButtonVisible="true"
         app:maskColor="#6C000000"
         />
+
     <TextView
+        android:id="@+id/scannerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scannerTextView"
         android:layout_below="@+id/scanner_view"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:text="Scanning"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/pentay_book"
+        android:text="Scannez le code barre d'un livre"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        />
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/customAppBarColor">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+
+                >
+
+                <ImageButton
+                    android:id="@+id/homeButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_baseline_home_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/scannerButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_baseline_qr_code_scanner_24" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </RelativeLayout>
