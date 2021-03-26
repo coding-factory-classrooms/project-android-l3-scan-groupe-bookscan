@@ -72,6 +72,7 @@ class ScannerActivity : AppCompatActivity() {
         var intent = Intent(this,BookDetailsActivity::class.java)
         intent.putExtra("Book",book)
         startActivity(intent)
+        finish()
     }
 
     override fun onRestart() {

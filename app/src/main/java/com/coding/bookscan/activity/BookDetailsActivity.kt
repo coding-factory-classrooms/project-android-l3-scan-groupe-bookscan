@@ -58,9 +58,7 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val intent = Intent(this,BookListActivity::class.java)
-        startActivity(intent)
-        finish()
+        navToBookList()
         return true
     }
 
@@ -80,5 +78,16 @@ class BookDetailsActivity : AppCompatActivity() {
         binding.releaseDateTextView.text = book.release_date
         binding.editorTextView.text = book.edition
         binding.isbnTextView.text = book.isbn
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navToBookList()
+    }
+
+    private fun navToBookList(){
+        val intent = Intent(this,BookListActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
