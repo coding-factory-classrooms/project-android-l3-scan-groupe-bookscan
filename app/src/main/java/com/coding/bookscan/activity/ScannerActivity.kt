@@ -65,8 +65,6 @@ class ScannerActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun goToDetails(book: Book) {
         Log.i("scanner", "goToDetails: $book")
         var intent = Intent(this,BookDetailsActivity::class.java)
