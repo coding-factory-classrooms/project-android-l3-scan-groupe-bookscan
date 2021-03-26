@@ -32,4 +32,9 @@ interface BookDao {
 
     @Delete
     fun deleteBook(book: Book)
+
+    @Override
+    public fun add(index: Int, element: String): Unit {
+
+    }
 }
