@@ -36,11 +36,10 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.adapter = adapter
 
         model.getBookList(App.db)
-        binding.homeButton.setOnClickListener {
-            val intent = Intent(this,BookListActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
+        binding.homeButton.setBackgroundResource(R.drawable.ic_baseline_home_black_24)
+        binding.homeButton.isEnabled = false
+
         binding.scannerButton.setOnClickListener {
             val intent = Intent(this,ScannerActivity::class.java)
             startActivity(intent)
