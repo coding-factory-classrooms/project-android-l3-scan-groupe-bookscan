@@ -38,10 +38,10 @@ class ScannerActivity : AppCompatActivity() {
         binding = ActivityScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupPermissions(this,this)
+        setupPermissions(this, this)
 
-        model.getScannerState().observe(this, Observer {
-            state -> uiResponse(state)
+        model.getScannerState().observe(this, Observer { state ->
+            uiResponse(state)
         })
 
 
@@ -51,10 +51,11 @@ class ScannerActivity : AppCompatActivity() {
         }
         binding.scannerButton.setOnClickListener {
 
-        binding.scannerButton.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_black_24)
-        binding.scannerButton.isEnabled = false;
+            binding.scannerButton.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_black_24)
+            binding.scannerButton.isEnabled = false;
+        }
 
-        codeScanner(binding)
+            codeScanner(binding)
     }
 
     private fun navigation(navigation: String){
