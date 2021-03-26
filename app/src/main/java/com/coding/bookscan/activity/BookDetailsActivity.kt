@@ -32,22 +32,19 @@ class BookDetailsActivity : AppCompatActivity() {
         })
 
         binding.homeButton.setOnClickListener {
-            val intent = Intent(this,BookListActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("list")
+
         }
         binding.scannerButton.setOnClickListener {
-            val intent = Intent(this,ScannerActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("scanner")
+
         }
 
         binding.deleteFloatingActionButton.setOnClickListener {
             Log.i("delete","objet 1 : $book")
-            val intent = Intent(this,BookListActivity::class.java)
             model.deleteRow(App.db,book.id)
-            startActivity(intent)
-            finish()
+            navigation("list")
+
         }
 
         val actionBar = supportActionBar
@@ -55,6 +52,16 @@ class BookDetailsActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
 
         model.loadBookDetail(book)
+    }
+
+    private fun navigation(navigation: String){
+        lateinit var intent:Intent
+        when(navigation){
+            "list" -> intent = Intent(this,BookListActivity::class.java)
+            "scanner" -> intent= Intent(this,ScannerActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

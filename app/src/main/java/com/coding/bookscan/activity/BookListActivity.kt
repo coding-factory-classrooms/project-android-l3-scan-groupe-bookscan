@@ -1,5 +1,6 @@
 package com.coding.bookscan.activity
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.coding.bookscan.App
 import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookListBinding
-import com.coding.bookscan.viewmodel.BookListViewModel
-import com.coding.bookscan.viewmodel.BookListViewModelState
+import com.coding.bookscan.entity.data.Book
+import com.coding.bookscan.viewmodel.*
 
 class BookListActivity : AppCompatActivity() {
     private val model : BookListViewModel by viewModels()
@@ -37,21 +38,39 @@ class BookListActivity : AppCompatActivity() {
 
         model.getBookList(App.db)
         binding.homeButton.setOnClickListener {
-            val intent = Intent(this,BookListActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("list")
+
         }
         binding.scannerButton.setOnClickListener {
-            val intent = Intent(this,ScannerActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("scanner")
         }
 
         binding.searchTextPlain.addTextChangedListener {
             var textSearched: TextView = binding.searchTextPlain
             model.getBookList(App.db, textSearched.text.toString())
         }
+
+        binding.addBookButton.setOnClickListener {
+            runOnUiThread {
+                AddBook.getBook("9780786966899",App.db)
+                Log.i("adding","the code ")
+            }
+            navigation("list")
+
+        }
     }
+
+
+    private fun navigation(navigation: String){
+        lateinit var intent:Intent
+        when(navigation){
+            "list" -> intent = Intent(this,BookListActivity::class.java)
+            "scanner" -> intent= Intent(this,ScannerActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
+    }
+
 
     private fun updateUi(state: BookListViewModelState) {
         when(state){

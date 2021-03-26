@@ -44,17 +44,25 @@ class ScannerActivity : AppCompatActivity() {
         })
 
         binding.homeButton.setOnClickListener {
-            val intent = Intent(this,BookListActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("list")
+
         }
         binding.scannerButton.setOnClickListener {
-            val intent = Intent(this,ScannerActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("scanner")
+
         }
 
         codeScanner(binding)
+    }
+
+    private fun navigation(navigation: String){
+        lateinit var intent:Intent
+        when(navigation){
+            "list" -> intent = Intent(this,BookListActivity::class.java)
+            "scanner" -> intent= Intent(this,ScannerActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 
 
