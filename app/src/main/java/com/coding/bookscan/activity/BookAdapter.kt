@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.databinding.BookItemBinding
+import com.coding.bookscan.formatedDate
 import com.coding.bookscan.formatedImgName
 
 class BookAdapter(var books:List<Book>) : RecyclerView.Adapter<BookAdapter.ViewHolder>() {
@@ -29,7 +30,7 @@ class BookAdapter(var books:List<Book>) : RecyclerView.Adapter<BookAdapter.ViewH
         with(holder.binding){
             bookTitleTextView.text = book.title
             authorTextView.text = book.author
-            scanDateTextView.text = book.scanDate
+            scanDateTextView.text = book.formatedDate()
             with(holder.itemView.context){
                 bookCoverImgView.setImageResource(this.resources.getIdentifier(book.formatedImgName(),"drawable",this.packageName))
             }
