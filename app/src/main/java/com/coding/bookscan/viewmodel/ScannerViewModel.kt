@@ -35,13 +35,13 @@ sealed class ScannerViewModelState(open val errorMessage : String = "", open val
 class ScannerViewModel : ViewModel() {
 
     private val scannerState = MutableLiveData<ScannerViewModelState>()
-    private val client = OkHttpClient()
+    private val clientHttp = OkHttpClient()
 
     fun getScannerState(): MutableLiveData<ScannerViewModelState> {
         return scannerState
     }
 
-    fun getBook(isbn : String, db : AppDatabase) {
+    fun getBook(isbn : String, db : AppDatabase, client : OkHttpClient = clientHttp, isTest: Boolean = false, actualDate: String = Date().toString()) {
         var jsonReturn: String = ""
         val gson = Gson()
         lateinit var book: Book
@@ -57,7 +57,48 @@ class ScannerViewModel : ViewModel() {
             .build()
 
         try {
-            client.newCall(request).enqueue(object : Callback {
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                response.body()?.let { jsonReturn = it.string() }
+                if (jsonReturn.isNullOrEmpty()) {
+                    scannerState.postValue(
+                        ScannerViewModelState.Failure("Aucune réponse trouvée")
+                    )
+                    return
+                }
+                try {
+                    book = gson.fromJson(jsonReturn, Book::class.java)
+                } catch (e: Exception) {
+                    scannerState.postValue(
+                        ScannerViewModelState.Failure("Erreur de donnée récupérée")
+                    )
+                    return
+                }
+                book.scanDate = actualDate
+                if(!isTest) {
+                    try {
+                        db.bookDao().insertBook(book)
+                    } catch (e: Exception) {
+                        println(e)
+                        scannerState.postValue(
+                            ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
+                        )
+                        return
+                    }
+                }
+
+                scannerState.postValue(
+                    ScannerViewModelState.Success(
+                        book,
+                        "Livre trouvé $isbn"
+                    )
+                )
+            } else {
+                scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
+                return
+            }
+
+            /*client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
                     return
@@ -94,8 +135,10 @@ class ScannerViewModel : ViewModel() {
                         )
                     )
                 }
-            })
+            })*/
+
         } catch (e: Exception) {
+            println(e)
             scannerState.postValue(ScannerViewModelState.Failure("Erreur de récupération de donnée"))
             return
         }
