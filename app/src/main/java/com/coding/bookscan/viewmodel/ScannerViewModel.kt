@@ -3,6 +3,7 @@ package com.coding.bookscan.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,6 +17,7 @@ import com.budiyev.android.codescanner.ScanMode
 import com.coding.bookscan.databinding.ActivityScannerBinding
 import com.coding.bookscan.entity.AppDatabase
 import com.coding.bookscan.entity.data.Book
+import com.coding.bookscan.formatedImgName
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
@@ -51,7 +53,7 @@ class ScannerViewModel : ViewModel() {
         }
     }
 
-    fun getBook(isbn : String, db : AppDatabase){
+    fun getBook(isbn : String, db : AppDatabase, context: Context){
         var jsonReturn: String = ""
         val gson = Gson()
         val url = apiBaseUrl + isbn
@@ -71,6 +73,7 @@ class ScannerViewModel : ViewModel() {
                 Log.i("ApiUtils", book.genre)
                 Log.i("ApiUtils", book.image)
                 book.scanDate = Date().toString()
+
                 db.bookDao().insertBook(book)
                 scannerState.postValue(ScannerViewModelState.Success(book,"Livre trouvé $isbn"))
             }

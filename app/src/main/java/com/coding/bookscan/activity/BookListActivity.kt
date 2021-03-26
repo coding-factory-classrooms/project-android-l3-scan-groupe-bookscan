@@ -11,7 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coding.bookscan.App
-import com.coding.bookscan.ApiUtils
+import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookListBinding
 import com.coding.bookscan.viewmodel.BookListViewModel
 import com.coding.bookscan.viewmodel.BookListViewModelState
@@ -36,9 +36,6 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.adapter = adapter
 
         model.getBookList(App.db,this)
-
-        var apiUtils: ApiUtils = ApiUtils()
-        var response: String = apiUtils.getBooks("https://students.gryt.tech/bookscan/9782253169789")
         binding.homeButton.setOnClickListener {
             val intent = Intent(this,BookListActivity::class.java)
             startActivity(intent)
@@ -54,8 +51,6 @@ class BookListActivity : AppCompatActivity() {
             var textSearched: TextView = binding.searchTextPlain
             model.getBookListByName(App.db,this,textSearched.text.toString())
         }
-
-        Log.i("ApiUtils", response)
     }
 
     private fun updateUi(state: BookListViewModelState) {

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookDetailsBinding
+import com.coding.bookscan.formatedImgName
 import com.coding.bookscan.viewmodel.BookDetailsViewModel
 import com.coding.bookscan.viewmodel.BookDetailsViewModelState
 
@@ -61,7 +62,7 @@ class BookDetailsActivity : AppCompatActivity() {
                 binding.titleBookTextView.text = book.title
                 binding.authorTextView.text = book.author
                 binding.summaryTextView.text = book.summary
-                binding.bookCoverImgView.setImageResource(book.coverId)
+                binding.bookCoverImgView.setImageResource(resources.getIdentifier(book.formatedImgName(),"drawable",packageName))
             }
             is BookDetailsViewModelState.Failure -> Toast.makeText(this,state.errorMessage,Toast.LENGTH_SHORT).show()
         }
