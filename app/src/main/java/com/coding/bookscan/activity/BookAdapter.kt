@@ -1,10 +1,12 @@
 package com.coding.bookscan.activity
 
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.databinding.BookItemBinding
@@ -25,6 +27,7 @@ class BookAdapter(var books:List<Book>) : RecyclerView.Adapter<BookAdapter.ViewH
         return books.count()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val book = books[position]
         with(holder.binding){

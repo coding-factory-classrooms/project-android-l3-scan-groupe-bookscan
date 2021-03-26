@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private val model : MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
-    private lateinit var  ab : ActionBar
+
     @RequiresApi(Build.VERSION_CODES.M)
 
     override fun onCreate(savedInstanceState: Bundle?) {

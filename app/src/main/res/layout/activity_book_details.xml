@@ -8,12 +8,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,7 +43,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:clickable="true"
-                    app:backgroundTint="#E3E3E3"
+                    app:backgroundTint="@android:color/background_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/bookCoverImgView"
                     app:layout_constraintTop_toTopOf="parent"
@@ -115,13 +113,125 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/summaryTitleTextView"
-                    tools:text="Le Seigneur des Anneaux raconte la fin du Troisième Âge de la Terre du Milieu. Bilbo le Hobbit décide de quitter la Comté et laisse pour héritage à son neveu Frodo, Cul-de-Sac et l'Anneau qu'il avait trouvé lors de son aventure. Après de longue recherche, Gandalf apprend qu'il s'agit en fait de l'Anneau Unique, objet de pouvoir de Sauron, qui le cherche afin de conquérir la Terre du Milieu. Face à cette découverte, Gandalf demande à Frodo de prendre la route de Fondcombe. À partir de là, commencera le voyage de la Communauté de l'Anneau dont l'objectif désespéré sera sa destruction, dans la forge qui l'a vu naître au cœur du Mordor. Malheureusement, la Communauté sera séparée, les uns continuant la quête et les autres rejoignant les Royaumes du Rohan puis du Gondor qui participeront à la Guerre de l'Anneau. " />
+                    app:layout_constraintTop_toBottomOf="@+id/summaryTitleTextView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/InfoTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pentay_book"
+                    android:text="Informations :"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/relaseDateTitletextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/pentay_book"
+                    android:text="Date de publication"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/releaseDateTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/InfoTitleTextView" />
+
+                <TextView
+                    android:id="@+id/releaseDateTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="Date"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/relaseDateTitletextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/relaseDateTitletextView"
+                    app:layout_constraintTop_toTopOf="@+id/relaseDateTitletextView" />
+
+                <TextView
+                    android:id="@+id/EditorTitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/pentay_book"
+                    android:text="Editeur"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/editorTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/relaseDateTitletextView" />
+
+                <TextView
+                    android:id="@+id/editorTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:fontFamily="@font/pentay_book"
+                    android:text="Editeur"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/EditorTitleTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/EditorTitleTextView"
+                    app:layout_constraintTop_toTopOf="@+id/EditorTitleTextView" />
+
+                <TextView
+                    android:id="@+id/isbnTitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/pentay_book"
+                    android:text="ISBN du livre"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/isbnTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/EditorTitleTextView" />
+
+                <TextView
+                    android:id="@+id/isbnTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="isbn"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/isbnTitleTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/isbnTitleTextView"
+                    app:layout_constraintTop_toTopOf="@+id/isbnTitleTextView"
+                    app:layout_constraintVertical_bias="1.0" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
