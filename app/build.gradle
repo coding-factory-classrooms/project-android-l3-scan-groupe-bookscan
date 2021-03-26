@@ -13,7 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -50,7 +50,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'com.google.android.material:material:1.1.0-alpha10'
-
+    implementation 'androidx.appcompat:appcompat'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
 
     def lifecycle_version = "2.3.0"

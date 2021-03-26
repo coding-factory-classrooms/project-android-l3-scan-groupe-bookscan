@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.coding.bookscan.App
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.R
 import com.coding.bookscan.databinding.ActivityBookDetailsBinding
@@ -37,6 +38,14 @@ class BookDetailsActivity : AppCompatActivity() {
         }
         binding.scannerButton.setOnClickListener {
             val intent = Intent(this,ScannerActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.deleteFloatingActionButton.setOnClickListener {
+            Log.i("delete","objet 1 : $book")
+            val intent = Intent(this,BookListActivity::class.java)
+            model.deleteRow(App.db,book.id)
             startActivity(intent)
             finish()
         }
