@@ -50,7 +50,7 @@ class BookListActivity : AppCompatActivity() {
         binding.searchTextPlain.addTextChangedListener {
             var textSearched: TextView = binding.searchTextPlain
             model.getBookListByName(App.db,this,textSearched.text.toString())
-        }*/
+        }
     }
 
     private fun updateUi(state: BookListViewModelState) {
