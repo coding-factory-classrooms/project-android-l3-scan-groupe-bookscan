@@ -23,7 +23,7 @@ class BookListViewModelTest {
     fun `get book list yields Success`() {
         val model = BookListViewModel()
         val observer = model.getBookListState().testObserver()
-        val book = Book(1, "1234", "Oui", "","","","","","","",1)
+        val book = Book(1, "1234", "Oui", "","","","","","","")
         val db = mock<AppDatabase>()
         val bookDao = mock<BookDao>()
         whenever(bookDao.getAllBook()).thenReturn(listOf(book))

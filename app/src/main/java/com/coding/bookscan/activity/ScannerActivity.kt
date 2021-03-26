@@ -61,8 +61,7 @@ class ScannerActivity : AppCompatActivity() {
     private fun uiResponse(state: ScannerViewModelState?) {
         when(state){
             is ScannerViewModelState.Success -> goToDetails(state.book)
-            is ScannerViewModelState.Failure -> TODO()
-            null -> TODO()
+            is ScannerViewModelState.Failure -> Toast.makeText(this@ScannerActivity, state.errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 
