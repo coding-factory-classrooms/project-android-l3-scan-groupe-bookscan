@@ -49,7 +49,9 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        val intent = Intent(this,BookListActivity::class.java)
+        startActivity(intent)
+        finish()
         return true
     }
 
