@@ -67,13 +67,18 @@ class BookDetailsActivity : AppCompatActivity() {
     private fun updateUi(state: BookDetailsViewModelState) {
         when(state){
             BookDetailsViewModelState.Loading -> TODO()
-            is BookDetailsViewModelState.Success -> {
-                binding.titleBookTextView.text = book.title
-                binding.authorTextView.text = book.author
-                binding.summaryTextView.text = book.summary
-                binding.bookCoverImgView.setImageResource(resources.getIdentifier(book.formatedImgName(),"drawable",packageName))
-            }
+            is BookDetailsViewModelState.Success -> setUi(book)
             is BookDetailsViewModelState.Failure -> Toast.makeText(this,state.errorMessage,Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setUi(book: Book) {
+        binding.titleBookTextView.text = book.title
+        binding.authorTextView.text = book.author
+        binding.summaryTextView.text = book.summary
+        binding.bookCoverImgView.setImageResource(resources.getIdentifier(book.formatedImgName(),"drawable",packageName))
+        binding.releaseDateTextView.text = book.release_date
+        binding.editorTextView.text = book.edition
+        binding.isbnTextView.text = book.isbn
     }
 }
