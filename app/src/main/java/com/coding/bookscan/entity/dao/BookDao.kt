@@ -21,7 +21,7 @@ interface BookDao {
     fun findBookById(bookIsbn: Int): Book
 
     @Query("SELECT * FROM book WHERE book_title LIKE :bookTitle ")
-    fun findBookByChar(bookTitle: String): LiveData<List<Book>>
+    fun findBookByChar(bookTitle: String): List<Book>
 
     @Insert
     fun insertBook(book: Book)

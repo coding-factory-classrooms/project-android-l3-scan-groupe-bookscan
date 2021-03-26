@@ -49,7 +49,7 @@ class BookListActivity : AppCompatActivity() {
 
         binding.searchTextPlain.addTextChangedListener {
             var textSearched: TextView = binding.searchTextPlain
-            model.getBookListByName(App.db,this,textSearched.text.toString())
+            model.getBookList(App.db, textSearched.text.toString())
         }
     }
 
