@@ -99,6 +99,6 @@ class ScannerViewModel : ViewModel() {
             scannerState.postValue(ScannerViewModelState.Failure("Erreur de récupération de donnée"))
             return
         }
-        scannerState.postValue(ScannerViewModelState.Failure("Sortie de la requête"))
+        //scannerState.postValue(ScannerViewModelState.Failure("Sortie de la requête"))
     }
 }
