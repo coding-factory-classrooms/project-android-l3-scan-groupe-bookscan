@@ -35,7 +35,7 @@ class BookListActivity : AppCompatActivity() {
         binding.bookListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.bookListRecyclerView.adapter = adapter
 
-        model.getBookList(App.db,this)
+        model.getBookList(App.db)
         binding.homeButton.setOnClickListener {
             val intent = Intent(this,BookListActivity::class.java)
             startActivity(intent)
@@ -49,7 +49,7 @@ class BookListActivity : AppCompatActivity() {
 
         binding.searchTextPlain.addTextChangedListener {
             var textSearched: TextView = binding.searchTextPlain
-            model.getBookListByName(App.db,this,textSearched.text.toString())
+            model.getBookList(App.db, textSearched.text.toString())
         }
     }
 

@@ -1,5 +1,6 @@
 package com.coding.bookscan.activity
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -21,10 +22,10 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.coding.bookscan.App
 import com.coding.bookscan.entity.data.Book
-import com.coding.bookscan.viewmodel.CAMERA_REQUEST_CODE
 import com.coding.bookscan.viewmodel.ScannerViewModel
 import com.coding.bookscan.viewmodel.ScannerViewModelState
 
+const val CAMERA_REQUEST_CODE = 101
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var codeScanner: CodeScanner
@@ -36,7 +37,7 @@ class ScannerActivity : AppCompatActivity() {
         binding = ActivityScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model.setupPermissions(this,this)
+        setupPermissions(this,this)
 
         model.getScannerState().observe(this, Observer {
             state -> uiResponse(state)
@@ -60,8 +61,7 @@ class ScannerActivity : AppCompatActivity() {
     private fun uiResponse(state: ScannerViewModelState?) {
         when(state){
             is ScannerViewModelState.Success -> goToDetails(state.book)
-            is ScannerViewModelState.Failure -> TODO()
-            null -> TODO()
+            is ScannerViewModelState.Failure -> Toast.makeText(this@ScannerActivity, state.errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -112,7 +112,7 @@ class ScannerActivity : AppCompatActivity() {
 
             decodeCallback =  DecodeCallback {
                 runOnUiThread {
-                    model.getBook(it.text, App.db, this@ScannerActivity)
+                    model.getBook(it.text, App.db)
                     Log.i("scanner","the code ${it.text}")
                 }
             }
@@ -126,6 +126,18 @@ class ScannerActivity : AppCompatActivity() {
         codeScanner.startPreview()
         routingView.scannerView.setOnClickListener(){
             codeScanner.startPreview()
+        }
+    }
+
+    private fun makeRequest(activity: Activity) {
+        ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
+    }
+
+    private fun setupPermissions(context: Context, activity: Activity){
+        val permission:Int = ContextCompat.checkSelfPermission(context,android.Manifest.permission.CAMERA)
+        if(permission != PackageManager.PERMISSION_GRANTED){
+            Log.i("scanner","")
+            makeRequest(activity)
         }
     }
 }

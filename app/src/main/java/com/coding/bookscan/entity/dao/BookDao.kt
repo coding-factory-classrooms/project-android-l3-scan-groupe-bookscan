@@ -12,7 +12,7 @@ import com.coding.bookscan.entity.data.Book
 @Dao
 interface BookDao {
     @Query("SELECT * FROM book")
-    fun getAllBook(): LiveData<List<Book>>
+    fun getAllBook(): List<Book>
 
     @Query("SELECT * FROM book WHERE book_title LIKE :bookTitle LIMIT 1")
     fun findBookByName(bookTitle: String): LiveData<Book>
@@ -21,7 +21,7 @@ interface BookDao {
     fun findBookById(bookIsbn: Int): Book
 
     @Query("SELECT * FROM book WHERE book_title LIKE :bookTitle ")
-    fun findBookByChar(bookTitle: String): LiveData<List<Book>>
+    fun findBookByChar(bookTitle: String): List<Book>
 
 
     @Query("Delete  FROM book WHERE id = :idRow ")
