@@ -21,6 +21,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.coding.bookscan.App
+import com.coding.bookscan.R
 import com.coding.bookscan.entity.data.Book
 import com.coding.bookscan.viewmodel.ScannerViewModel
 import com.coding.bookscan.viewmodel.ScannerViewModelState
@@ -43,18 +44,27 @@ class ScannerActivity : AppCompatActivity() {
             state -> uiResponse(state)
         })
 
+
         binding.homeButton.setOnClickListener {
-            val intent = Intent(this,BookListActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigation("list")
+
         }
         binding.scannerButton.setOnClickListener {
-            val intent = Intent(this,ScannerActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+
+        binding.scannerButton.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_black_24)
+        binding.scannerButton.isEnabled = false;
 
         codeScanner(binding)
+    }
+
+    private fun navigation(navigation: String){
+        lateinit var intent:Intent
+        when(navigation){
+            "list" -> intent = Intent(this,BookListActivity::class.java)
+            "scanner" -> intent= Intent(this,ScannerActivity::class.java)
+        }
+        startActivity(intent)
+        finish()
     }
 
 
@@ -65,13 +75,12 @@ class ScannerActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun goToDetails(book: Book) {
         Log.i("scanner", "goToDetails: $book")
         var intent = Intent(this,BookDetailsActivity::class.java)
         intent.putExtra("Book",book)
         startActivity(intent)
+        finish()
     }
 
     override fun onRestart() {
