@@ -27,9 +27,15 @@ import kotlin.concurrent.thread
 
 const val apiBaseUrl: String = "https://students.gryt.tech/bookscan/"
 
-sealed class ScannerViewModelState(open val errorMessage : String = "", open val successMessage : String = "") {
-    data class Success(val book : Book, override val successMessage: String) : ScannerViewModelState(successMessage = successMessage)
-    data class Failure(override val errorMessage: String) : ScannerViewModelState(errorMessage = errorMessage)
+sealed class ScannerViewModelState(
+    open val errorMessage: String = "",
+    open val successMessage: String = ""
+) {
+    data class Success(val book: Book, override val successMessage: String) :
+        ScannerViewModelState(successMessage = successMessage)
+
+    data class Failure(override val errorMessage: String) :
+        ScannerViewModelState(errorMessage = errorMessage)
 }
 
 class ScannerViewModel : ViewModel() {
@@ -41,7 +47,13 @@ class ScannerViewModel : ViewModel() {
         return scannerState
     }
 
-    fun getBook(isbn : String, db : AppDatabase, client : OkHttpClient = clientHttp, isTest: Boolean = false, actualDate: String = Date().toString()) {
+    fun getBook(
+        isbn: String,
+        db: AppDatabase,
+        client: OkHttpClient = clientHttp,
+        isTest: Boolean = false,
+        actualDate: String = Date().toString()
+    ) {
         var jsonReturn: String = ""
         val gson = Gson()
         lateinit var book: Book
@@ -57,53 +69,9 @@ class ScannerViewModel : ViewModel() {
             .build()
 
         try {
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                response.body()?.let { jsonReturn = it.string() }
-                if (jsonReturn.isNullOrEmpty()) {
-                    scannerState.postValue(
-                        ScannerViewModelState.Failure("Aucune réponse trouvée")
-                    )
-                    return
-                }
-                try {
-                    book = gson.fromJson(jsonReturn, Book::class.java)
-                } catch (e: Exception) {
-                    scannerState.postValue(
-                        ScannerViewModelState.Failure("Erreur de donnée récupérée")
-                    )
-                    return
-                }
-                book.scanDate = actualDate
-                if(!isTest) {
-                    try {
-                        db.bookDao().insertBook(book)
-                    } catch (e: Exception) {
-                        println(e)
-                        scannerState.postValue(
-                            ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
-                        )
-                        return
-                    }
-                }
-
-                scannerState.postValue(
-                    ScannerViewModelState.Success(
-                        book,
-                        "Livre trouvé $isbn"
-                    )
-                )
-            } else {
-                scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
-                return
-            }
-
-            /*client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
-                    return
-                }
-                override fun onResponse(call: Call, response: Response) {
+            if (isTest) {
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
                     response.body()?.let { jsonReturn = it.string() }
                     if (jsonReturn.isNullOrEmpty()) {
                         scannerState.postValue(
@@ -119,26 +87,72 @@ class ScannerViewModel : ViewModel() {
                         )
                         return
                     }
-                    book.scanDate = Date().toString()
-                    try {
-                        db.bookDao().insertBook(book)
-                    } catch (e: Exception) {
-                        scannerState.postValue(
-                            ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
-                        )
-                        return
+                    book.scanDate = actualDate
+                    if (!isTest) {
+                        try {
+                            db.bookDao().insertBook(book)
+                        } catch (e: Exception) {
+                            println(e)
+                            scannerState.postValue(
+                                ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
+                            )
+                            return
+                        }
                     }
+
                     scannerState.postValue(
                         ScannerViewModelState.Success(
                             book,
                             "Livre trouvé $isbn"
                         )
                     )
+                } else {
+                    scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
+                    return
                 }
-            })*/
+            } else {
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
+                        return
+                    }
 
+                    override fun onResponse(call: Call, response: Response) {
+                        response.body()?.let { jsonReturn = it.string() }
+                        if (jsonReturn.isNullOrEmpty()) {
+                            scannerState.postValue(
+                                ScannerViewModelState.Failure("Aucune réponse trouvée")
+                            )
+                            return
+                        }
+                        try {
+                            book = gson.fromJson(jsonReturn, Book::class.java)
+                        } catch (e: Exception) {
+                            scannerState.postValue(
+                                ScannerViewModelState.Failure("Erreur de donnée récupérée")
+                            )
+                            return
+                        }
+                        book.scanDate = Date().toString()
+                        try {
+                            db.bookDao().insertBook(book)
+                        } catch (e: Exception) {
+                            scannerState.postValue(
+                                ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
+                            )
+                            return
+                        }
+                        scannerState.postValue(
+                            ScannerViewModelState.Success(
+                                book,
+                                "Livre trouvé $isbn"
+                            )
+                        )
+                    }
+                })
+            }
         } catch (e: Exception) {
-            println(e)
+            println("ERREUR : " + e)
             scannerState.postValue(ScannerViewModelState.Failure("Erreur de récupération de donnée"))
             return
         }
