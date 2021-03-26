@@ -19,10 +19,10 @@ import com.coding.bookscan.entity.data.Book
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.thread
 
-const val CAMERA_REQUEST_CODE = 101
 const val apiBaseUrl: String = "https://students.gryt.tech/bookscan/"
 
 sealed class ScannerViewModelState(open val errorMessage : String = "", open val successMessage : String = "") {
@@ -39,41 +39,64 @@ class ScannerViewModel : ViewModel() {
         return scannerState
     }
 
-    private fun makeRequest(activity: Activity) {
-        ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
-    }
-
-    fun setupPermissions(context: Context, activity: Activity){
-        val permission:Int = ContextCompat.checkSelfPermission(context,android.Manifest.permission.CAMERA)
-        if(permission != PackageManager.PERMISSION_GRANTED){
-            Log.i("scanner","")
-            makeRequest(activity)
-        }
-    }
-
-    fun getBook(isbn : String, db : AppDatabase){
+    fun getBook(isbn : String, db : AppDatabase) {
         var jsonReturn: String = ""
         val gson = Gson()
+        lateinit var book: Book
+        if (isbn.isNullOrEmpty() || isbn.length != 13) {
+            scannerState.postValue(
+                ScannerViewModelState.Failure("Format de code barre incorrect")
+            )
+            return
+        }
         val url = apiBaseUrl + isbn
         val request = Request.Builder()
             .url(url)
             .build()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
-            override fun onResponse(call: Call, response: Response) {
-                response.body()?.let { jsonReturn = it.string() }
-                Log.i("ApiUtils", jsonReturn)
-                val book: Book = gson.fromJson(jsonReturn, Book::class.java)
-                Log.i("ApiUtils", book.title)
-                Log.i("ApiUtils", book.author)
-                Log.i("ApiUtils", book.edition)
-                Log.i("ApiUtils", book.genre)
-                Log.i("ApiUtils", book.image)
-                book.scanDate = Date().toString()
-                db.bookDao().insertBook(book)
-                scannerState.postValue(ScannerViewModelState.Success(book,"Livre trouvé $isbn"))
-            }
-        })
+        try {
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    scannerState.postValue(ScannerViewModelState.Failure("Erreur de requête"))
+                    return
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    response.body()?.let { jsonReturn = it.string() }
+                    if (jsonReturn.isNullOrEmpty()) {
+                        scannerState.postValue(
+                            ScannerViewModelState.Failure("Aucune réponse trouvée")
+                        )
+                        return
+                    }
+                    try {
+                        book = gson.fromJson(jsonReturn, Book::class.java)
+                    } catch (e: Exception) {
+                        scannerState.postValue(
+                            ScannerViewModelState.Failure("Erreur de donnée récupérée")
+                        )
+                        return
+                    }
+                    book.scanDate = Date().toString()
+                    try {
+                        db.bookDao().insertBook(book)
+                    } catch (e: Exception) {
+                        scannerState.postValue(
+                            ScannerViewModelState.Failure("Erreur lors de l'ajout en base")
+                        )
+                        return
+                    }
+                    scannerState.postValue(
+                        ScannerViewModelState.Success(
+                            book,
+                            "Livre trouvé $isbn"
+                        )
+                    )
+                }
+            })
+        } catch (e: Exception) {
+            scannerState.postValue(ScannerViewModelState.Failure("Erreur de récupération de donnée"))
+            return
+        }
+        scannerState.postValue(ScannerViewModelState.Failure("Coucou"))
     }
 }
